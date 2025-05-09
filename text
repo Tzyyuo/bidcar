@@ -1,0 +1,150 @@
+<?php
+$id_lelang = $_POST['id_lelang'];
+$id_user = $_SESSION['id_user'];
+$penawaran_baru = $_POST['penawaran']; // input dari form
+
+// Ambil data harga_awal dan status
+$sql = "SELECT l.status, b.harga_awal 
+        FROM tb_lelang l 
+        JOIN tb_barang b ON l.id_barang = b.id_barang 
+        WHERE l.id_lelang = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_lelang);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+
+if ($data['status'] != 'open') {
+    echo "Lelang sudah ditutup.";
+    exit;
+}
+
+$harga_awal = $data['harga_awal'];
+
+// Ambil penawaran tertinggi dari tb_penawaran
+$sql = "SELECT MAX(penawaran) AS tertinggi FROM tb_penawaran WHERE id_lelang = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_lelang);
+$stmt->execute();
+$result = $stmt->get_result();
+$max = $result->fetch_assoc();
+$tertinggi = $max['tertinggi'] ?? 0;
+
+if ($penawaran_baru > $harga_awal && $penawaran_baru > $tertinggi) {
+    // Masukkan penawaran baru
+    $sql = "INSERT INTO tb_penawaran (id_lelang, id_user, tanggal_penawaran, penawaran) 
+            VALUES (?, ?, NOW(), ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iii", $id_lelang, $id_user, $penawaran_baru);
+    $stmt->execute();
+    echo "Penawaran berhasil disimpan!";
+} else {
+    echo "Penawaran harus lebih tinggi dari harga awal dan penawaran tertinggi.";
+}
+?>
+
+<?php
+$id_lelang = $_POST['id_lelang'];
+$id_user = $_SESSION['id_user']; // id masyarakat penawar
+$nominal = $_POST['nominal'];
+
+// 1. Cek status lelang
+$query = "SELECT l.status, b.harga_awal 
+          FROM tb_lelang l 
+          JOIN tb_barang b ON l.id_barang = b.id_barang 
+          WHERE l.id_lelang = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id_lelang);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+
+$status = $data['status'];
+$harga_awal = $data['harga_awal'];
+
+if ($status != 'open') {
+    echo "Lelang sudah ditutup, tidak bisa menawar.";
+    exit;
+}
+
+// 2. Ambil penawaran tertinggi sebelumnya
+$query_max = "SELECT MAX(nominal) as max_bid FROM tb_penawaran WHERE id_lelang = ?";
+$stmt = $conn->prepare($query_max);
+$stmt->bind_param("i", $id_lelang);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+$max_bid = $row['max_bid'] ?? 0; // jika belum ada penawaran, dianggap 0
+
+// 3. Cek apakah nominal lebih besar dari harga awal dan max_bid
+if ($nominal > $harga_awal && $nominal > $max_bid) {
+    $query_insert = "INSERT INTO tb_penawaran (id_lelang, id_user, tanggal_penawaran, nominal)
+                     VALUES (?, ?, NOW(), ?)";
+    $stmt = $conn->prepare($query_insert);
+    $stmt->bind_param("iii", $id_lelang, $id_user, $nominal);
+    $stmt->execute();
+
+    echo "Penawaran berhasil!";
+} else {
+    echo "Penawaran harus lebih tinggi dari harga awal dan penawaran sebelumnya!";
+}
+?>
+
+<?php
+// Cek apakah lelang dapat ditutup (status masih 'open')
+$id_lelang = $_POST['id_lelang']; // ID lelang yang ingin ditutup
+
+// Query untuk ambil penawaran tertinggi
+$query = "SELECT MAX(nominal) AS harga_akhir, id_user 
+          FROM tb_penawaran WHERE id_lelang = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id_lelang);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+$harga_akhir = $row['harga_akhir'];
+$id_user = $row['id_user'];
+
+// Cek apakah lelang masih dibuka dan ada penawaran
+if ($harga_akhir > 0) {
+    // Update status lelang menjadi ditutup dan set harga_akhir
+    $sql = "UPDATE tb_lelang 
+            SET status = 'ditutup', harga_akhir = ?, id_user = ?
+            WHERE id_lelang = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iii", $harga_akhir, $id_user, $id_lelang);
+    $stmt->execute();
+    echo "Lelang berhasil ditutup!";
+} else {
+    echo "Lelang belum ada penawaran, tidak bisa ditutup!";
+}
+?>
+
+
+<?php
+// Cek apakah barang sudah dilelang
+$id_barang = $_POST['id_barang']; // ID barang yang dipilih oleh petugas
+$id_petugas = $_SESSION['id_petugas']; // ID petugas dari session
+
+// Query untuk cek apakah barang sudah ada lelangnya
+$query = "SELECT * FROM tb_lelang WHERE id_barang = ? AND status != 'ditutup'";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id_barang);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows == 0) {
+    // Jika barang belum pernah dilelang, buka lelang
+    $sql = "INSERT INTO tb_lelang (id_barang, tgl_barang, harga_akhir, id_petugas, status) 
+            VALUES (?, NOW(), 0, ?, 'open')";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $id_barang, $id_petugas);
+    $stmt->execute();
+    echo "Lelang berhasil dibuka!";
+} else {
+    // Jika barang sudah pernah dilelang, beri pesan
+    echo "Barang ini sudah pernah dilelang atau sudah ditutup!";
+}
+?>
