@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  src: url('../fonts/ProductSans-Black.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+section.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 100px;
+  background-color: #b8dde3;
+  border-radius: 0 0 30px 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-text {
+  flex: 1;
+  max-width: 50%;
+  z-index: 2;
+}
+
+.hero-text h1.judul {
+  font-size: 48px;
+  font-weight: ;
+  line-height: 1.3;
+  color: #2d2d2d;
+}
+
+.hero-text h1.judul b {
+  color: #2d2d2d;
+  font-weight: 900;
+}
+
+.hero-text p {
+  font-size: 18px;
+  color: #3b3b3b;
+  margin-top: 20px;
+}
+
+.btn-registrasi {
+  margin-top: 30px;
+  padding: 12px 24px;
+  border: 2px solid #2d2d2d;
+  border-radius: 30px;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-registrasi a {
+  text-decoration: none;
+  color: #2d2d2d;
+}
+
+.btn-registrasi:hover {
+  background-color: #2d2d2d;
+}
+
+.btn-registrasi:hover a {
+  color: white;
+}
+
+.img-hero {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-hero img {
+  width: 100%;
+  max-width: 500px;
+  object-fit: contain;
+  z-index: 2;
+}
