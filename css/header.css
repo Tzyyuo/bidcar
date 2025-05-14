@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  src: url('../fonts/ProductSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Product Sans', sans-serif;
+  background-color: #fff;
+}
+
+/* Navbar container */
+.navigasi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 90px;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Logo dan menu */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo img {
+  height: 26px;
+}
+
+.logo ul {
+  display: flex;
+  list-style: none;
+  gap: 19px;
+}
+
+.logo ul li a {
+  text-decoration: none;
+  font-size: 12px;
+  color: #212121;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+  transition: color 0.2s ease-in-out;
+}
+
+.logo ul li a:hover {
+  color: #007bff;
+}
+
+/* Tombol kanan */
+.button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  gap: 6px;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* Masuk button */
+.btn-masuk {
+  background-color: transparent;
+  color: #2b2b2b;
+  border: 1.5px solid #2b2b2b;
+}
+
+.btn-masuk:hover {
+  background-color: #f5f5f5;
+}
+
+/* Kontak Kami button */
+.btn-kontak-kami {
+  background-color: #2b2b2b;
+  color: white;
+  border: none;
+  gap: 8px;
+}
+
+.btn-kontak-kami:hover {
+  background-color: #444;
+}
+
+/* Icon image */
+.icon {
+  width: 14px;
+  height: 14px;
+}
