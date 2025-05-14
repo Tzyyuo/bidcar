@@ -1,4 +1,4 @@
-<navbar class="navigasi">
+<nav class="navigasi">
     <div class="logo">
         <img src="bidcar.png">
         <ul>
@@ -8,8 +8,8 @@
         </ul>
     </div>
     <div class="button">
-        <button class = "btn-masuk" type="menu"><a href=""-> Masuk</button>
+        <button class = "btn-daftar" type="menu"><a href="../views/registrasi.php"-> Masuk</button></a>
         <button class = "btn-kontak-kami" type="menu">Kontak Kami</button>
     </div>
-</navbar>
+</nav>
 

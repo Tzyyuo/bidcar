@@ -13,12 +13,12 @@ if(isset($_GET['id_barang'])){
     if($stmt->execute()){
         echo "<script>
         alert('Data berhasil dihapus');
-        window.location.href = '/bidcar/model/petugas/data_petugas.php';
+        window.location.href = '/bidcar/model/petugas/data_barang.php';
       </script>";
     } else {
         echo "<script>
         alert('Gagal untuk hapus data');
-        window.location.href = '/bidcar/model/petugas/data_petugas.php';
+        window.location.href = '/bidcar/model/petugas/data_barang.php';
       </script>";
     }
 

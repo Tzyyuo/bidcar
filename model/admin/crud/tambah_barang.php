@@ -7,8 +7,18 @@ if (isset($_POST['tambah_barang'])) {
     $harga_awal = mysqli_real_escape_string($koneksi, $_POST['harga_awal']);
     $tgl = mysqli_real_escape_string($koneksi, $_POST['tgl']);
     $deskripsi_barang = mysqli_real_escape_string($koneksi, $_POST['deskripsi_barang']);
+    $transmisi = mysqli_real_escape_string($koneksi, $_POST['transmisi']);
+    $nama_file = $_FILES['gambar']['name'];
+    $type_file = $_FILES['gambar']['type'];
+    $tmp_file = $_FILES['gambar']['tmp_name'];
+    $path = "/bidcar/img";
+    $allowed_types = array('image/png', 'image/jpeg'); 
+    $ukuran_file = $_FILES['gambar']['size'] ?? 0;
+    $max_size = 2048000;
+    
 
-    $query = "INSERT INTO tb_barang (nama_barang, harga_awal, tgl, deskripsi_barang) VALUES ('$nama_barang', '$harga_awal', '$tgl', '$deskripsi_barang')";
+    $query = "INSERT INTO tb_barang (nama_barang, harga_awal, tgl, deskripsi_barang, transmisi, gambar) 
+          VALUES ('$nama_barang', '$harga_awal', '$tgl', '$deskripsi_barang', '$transmisi', '$nama_file')";
     $message = '';
 
     if (mysqli_query($koneksi, $query)) {
@@ -17,14 +27,6 @@ if (isset($_POST['tambah_barang'])) {
         $message = "Gagal melakukan input data: " . mysqli_error($koneksi);
     }
 
-
-    $nama_file = $_FILES['gambar']['name'];
-    $type_file = $_FILES['gambar']['type'];
-    $tmp_file = $_FILES['gambar']['tmp_name'];
-    $path = "../img";
-    $allowed_types = array('image/png', 'image/jpeg'); 
-    $ukuran_file = $_FILES['gambar']['size'] ?? 0;
-    $max_size = 2048000;
     if ($_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
         if (in_array($type_file, $allowed_types) && $ukuran_file <= $max_size) {
             if (!is_dir($path)) {
@@ -55,6 +57,7 @@ include '../../../layouts/sidebar.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendataan Barang</title>
+
 </head>
 <body>
     <div class="content">
@@ -80,6 +83,13 @@ include '../../../layouts/sidebar.php';
                 
                 <label for="deskripsi_barang">Deskripsi Barang:</label>
                 <input type="text" id="deskripsi_barang" name="deskripsi_barang" placeholder="Masukkan deskripsi barang" required>
+
+                <label for="transmisi">Transmisi:</label>
+                <select id="transmisi" name="transmisi" required>
+                    <option value="">-- Pilih Transmisi --</option>
+                    <option value="Manual">Manual</option>
+                    <option value="Automatic">Otomatis</option>
+                </select>
             </div>
             
             <button type="submit" name="tambah_barang">Tambahkan</button>

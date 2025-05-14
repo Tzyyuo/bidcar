@@ -1,6 +1,6 @@
 <section class="tentang-page">
-    <div class="isi-auction">
-        <h3 class="easy-auction">Easy<br>Auctin</h3>
+    <div class="auction">
+        <h3 class="easy-auction">Easy<br>Auction</h3>
             <p class="text-auction">Ikuti proses lelang mobil tanpa ribet! Cukup<br>daftar, pilih mobil, dan mulai bid langsung dari<br>perangkat kamu. Semuanya real-time dan<br>transparan.</p>
     </div>
     <div class="verif-cars">

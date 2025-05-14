@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-include ('../config/koneksi.php');  
-
+include '../config/koneksi.php';  
 
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
@@ -25,7 +24,6 @@ if (isset($_POST['submit'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['level'] = $user['id_level'];  
 
-       
             if ($user['id_level'] == 1) {
                 header("Location: /bidcar/model/admin/dashboard_admin.php");
             } else if ($user['id_level'] == 2) {

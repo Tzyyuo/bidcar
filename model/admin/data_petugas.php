@@ -19,7 +19,7 @@
     </div>
     <div class="list-petugas">
         <table border="1">
-            <thead>9
+            <thead>
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
