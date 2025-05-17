@@ -31,7 +31,10 @@ if (isset($_POST['submit'])) {
                 exit;
             }
         } else {
-            echo "Password salah!";
+            echo "<script>
+            alert('Password Salah!');
+            window.location.href = '/bidcar/views/login.php';
+            </script>";
         }
     } else {
         
@@ -48,10 +51,13 @@ if (isset($_POST['submit'])) {
                 $_SESSION['id_user'] = $user['id_user'];
                 $_SESSION['username'] = $user['username'];
                 
-                header("Location: /bidcar/model/masyarakat/dashboard_pengguna.php");
+                header("Location: /bidcar/model/masyarakat/laman_masyarakat.php");
             } else {
 
-                echo "Password salah!";
+                echo "<script>
+            alert('Password Salah!');
+            window.location.href = '/bidcar/views/login.php';
+            </script>";
             }
         } else {
             echo "Username tidak ditemukan!";

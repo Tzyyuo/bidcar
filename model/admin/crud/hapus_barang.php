@@ -2,15 +2,16 @@
 
 include '../../../config/koneksi.php';
 
-if(isset($_GET['id_barang'])){
+if (isset($_GET['id_barang'])) {
 
     $id_barang = $_GET['id_barang'];
 
-    $query = "DELETE FROM tb_barang where id = ?";
+    $query = "UPDATE tb_barang SET status = 'arsip' WHERE id_barang = ?";
+
     $stmt = $koneksi->prepare($query);
     $stmt->bind_param("i", $id_barang);
 
-    if($stmt->execute()){
+    if ($stmt->execute()){
         echo "<script>
         alert('Data berhasil dihapus');
         window.location.href = '/bidcar/model/petugas/data_barang.php';
@@ -23,5 +24,6 @@ if(isset($_GET['id_barang'])){
     }
 
     }
+    
 
 ?>

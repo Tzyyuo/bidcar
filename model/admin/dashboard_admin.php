@@ -9,10 +9,12 @@
     
     <?php include '../../layouts/sidebar.php';?>
     <div class="content">
+
         <div class="header-admin">
-        <img src="../../img/bidcar.png" alt="logo">
+        <img src="../../img/bidcar alt color 1.png" alt="logo">
         <h1>Dashboard Admin</h1>
         </div>
+
         <div class="card-grid">
             <div class="card-yellow">
                 <h4>Total Admin <img src="admin.png"></h4>
@@ -35,6 +37,7 @@
                 <h2>8</h2>
             </div>
         </div>
+        
     </div>
 </body>
 </html>

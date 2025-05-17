@@ -1,6 +1,6 @@
 <?php
-session_start();
 include '../../config/koneksi.php';
+session_start();
 
 if (!isset($_GET['id_lelang'])) {
     echo "Lelang tidak ditemukan.";
@@ -10,7 +10,7 @@ if (!isset($_GET['id_lelang'])) {
 $id_lelang = $_GET['id_lelang'];
 
 // Ambil detail lelang + barang
-$query = "SELECT l.*, b.nama_barang, b.harga_awal, b.gambar, b.deskripsi_barang, b.lokasi, b.transmisi, b.tgl
+$query = "SELECT l.*, b.nama_barang, b.harga_awal, b.gambar, b.deskripsi_barang, b.transmisi, b.tgl
           FROM tb_lelang l
           JOIN tb_barang b ON l.id_barang = b.id_barang
           WHERE l.id_lelang = ?";
@@ -185,9 +185,19 @@ $penawar = $stmt->get_result();
                     </p>
                     <p class="price">Harga Dasar Lelang<br><span> Rp <?= number_format($lelang['harga_awal']) ?></span></p>
                     <p>Harga Akhir Lelang<br><span>Rp <?= $lelang['harga_akhir'] ? 'Rp ' . number_format($lelang['harga_akhir']) : '-' ?></span></p>
-                    <p>⏱️ Waktu tersisa 3 hari lagi</p>
+                    <?php
+                    $now = new DateTime();
+                    $tgl_selesai = new DateTime($lelang['tgl_selesai']); // ambil dari data lelangmu
+                    $interval = $now->diff($tgl_selesai);
 
-
+                    if ($interval->invert == 0 && $interval->days > 0) {
+                    echo "<p>⏱️ Waktu tersisa " . $interval->days . " hari lagi</p>";
+                    } elseif ($interval->invert == 0 && $interval->days == 0) {
+                    echo "<p>⏱️ Waktu tersisa kurang dari 1 hari</p>";
+                    } else {
+                    echo "<p>⏱️ Lelang sudah selesai</p>";
+                }
+                ?>
                         <div class="form-status">
                              <form action="../../controllers/lelang_controllers.php" method="POST">
                             <input type="hidden" name="id_lelang" value="<?= $id_lelang ?>">

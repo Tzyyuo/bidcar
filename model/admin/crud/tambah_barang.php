@@ -78,7 +78,7 @@ include '../../../layouts/sidebar.php';
                 <label for="harga_awal">Harga Awal:</label>
                 <input type="text" id="harga_awal" name="harga_awal" required>
                 
-                <label for="tgl">Tanggal Mulai:</label>
+                <label for="tgl">Tanggal:</label>
                 <input type="date" id="tgl" name="tgl" required>
                 
                 <label for="deskripsi_barang">Deskripsi Barang:</label>

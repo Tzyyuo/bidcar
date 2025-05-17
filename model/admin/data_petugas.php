@@ -15,7 +15,7 @@
     </div>
     <div class="btn">
         <button class ="add-petugas" type ="button" name="tambah" ><a href="../admin/crud/tambah_petugas.php">Tambah Petugas</a></button>
-        <button class= "cetak-laporan" type="button" name="print" ><a href="../admin/generate_laporan.php">Cetak Laporan</a></button>
+        <button class= "cetak-laporan" type="button" name="print" ><a href="../../report/laporan_petugas.php">Cetak Laporan</a></button>
     </div>
     <div class="list-petugas">
         <table border="1">

@@ -110,7 +110,7 @@ include '../../config/koneksi.php';
             }
         </script>
 
-        <button type="button" class="cetak-laporan">Cetak Laporan</button>
+        <button type="button" class="cetak-laporan"><a href="/bidcar/report/laporan_lelang.php">Cetak Laporan</a></button>
 
         <div class="list-barang">
             <table border="1">
@@ -169,6 +169,7 @@ include '../../config/koneksi.php';
                             </td>
 
                             <td>
+                                <button type="button" name ="edit"><a href="edit_lelang.php?id_lelang=<?= $row['id_lelang']; ?>"><i class="fa-solid fa-pen"></i></a></button>
                                 <button type="submit" name="hapus"><a href="../../controllers/hapus_lelang.php?id_lelang=<?= $row['id_lelang']; ?>" class="btn-delete" title="Hapus" onclick="return confirm('Yakin hapus data ini?')"> <i class="fa-solid fa-trash"></i></a></button>
                             </td>
         

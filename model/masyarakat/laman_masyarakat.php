@@ -17,6 +17,8 @@
     <?php include '../../css/banner.css'; ?>
     </style>
 
+    <?php include '../../views/daftar_lelang.php';?>
+
     <?php include '../../layouts/tentang.php';?>
     <?php include '../../layouts/pusatbantuan.php';?>
     <?php include '../../layouts/footer.php';?>

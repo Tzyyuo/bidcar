@@ -1,6 +1,5 @@
 <?php include '../layouts/header.php';?>
-include 'lelang.php';
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -20,7 +20,7 @@
     
     <div class="container">
         <div class="sidebar">
-            <img src="../img/bidcar.png" alt="BidCar Logo">
+           <img src="../img/bidcar.png" alt="Logo">
             <h1>BidCar.</h1>
             <ul>
                 <li><a href="/bidcar/model/admin/dashboard_admin.php">Dashboard</a></li>
@@ -28,7 +28,11 @@
                 <li><a href="/bidcar/model/admin/data_lelang.php">Data Lelang</a></li>
                 <li><a href="/bidcar/model/admin/data_petugas.php">Data Petugas</a></li>
                 <li><a href="/bidcar/model/admin/data_pengguna.php">Data User</a></li>
-                <li><a href="/bidcar/views/logout.php"><-Logout</a></li>
+                <li>
+                    <form method="GET" action="../controllers/logout_controllers.php">
+                        <button type="button" name="logout"><a href="/bidcar/controllers/logout_controllers.php"><-Logout</a></button>
+                    </form>
+                </li>
             </ul>
         </div>
 </div>

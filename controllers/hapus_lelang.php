@@ -4,7 +4,7 @@ include '../config/koneksi.php';
 
 if(isset($_GET['hapus'])){
 
-    $id_barang = $_POST['id_lelang'];
+    $id_lelang = $_POST['id_lelang'];
 
     $query = "DELETE FROM tb_lelang where id_lelang = ?";
     $stmt = $koneksi->prepare($query);

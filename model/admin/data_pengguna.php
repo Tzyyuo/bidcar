@@ -14,7 +14,7 @@ include '../../config/koneksi.php';
     <div class="hal-judul">
         <img src="../../img/bidcar.png">
         <h1>Data Pengguna</h1>
-        <button class= "cetak-laporan" type="button" name="print" ><a href="../admin/generate_laporan.php">Cetak Laporan</a></button>
+        <button class= "cetak-laporan" type="button" name="print" ><a href="../../report/laporan_user.php">Cetak Laporan</a></button>
     </div>
 
     <div class="tabel-pengguna">

@@ -1,9 +1,23 @@
 <?php
-include '../config/koneksi.php';
-$query = "SELECT * FROM tb_barang 
-          INNER JOIN tb_lelang ON tb_barang.id_barang = tb_lelang.id_barang
-          WHERE tb_lelang.status = 'dibuka' 
-          ORDER BY tb_lelang.tgl_lelang DESC";
+include __DIR__ . '/../config/koneksi.php';
+
+$query = "SELECT
+    b.id_barang,
+    b.nama_barang,
+    b.gambar,
+    l.id_lelang,
+    l.status,
+    l.tgl_lelang   AS tgl,           -- alias jadi 'tgl'    
+    b.transmisi     AS transmisi,    -- kolom transmisi memang di tb_barang
+    b.harga_awal,
+    COALESCE(l.harga_akhir, b.harga_awal) AS harga_terkini
+  FROM tb_barang b
+  JOIN tb_lelang l ON b.id_barang = l.id_barang
+  WHERE l.status = 'dibuka'
+  ORDER BY l.tgl_lelang DESC
+";
+
+
 $result = mysqli_query($koneksi, $query);
 
 ?>
@@ -15,86 +29,99 @@ $result = mysqli_query($koneksi, $query);
     <title>Daftar Lelang</title>
     <link rel="stylesheet" href="style.css">
     <style>
-    body {
-    font-family: Arial, sans-serif;
-    background: #f3f8fc;
-    margin: 0;
-    padding: 20px;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f8fc;
+            margin: 0;
+            padding: 20px;
+        }
 
-.back-button {
-    margin-bottom: 20px;
-    padding: 8px 16px;
-    border: 1px solid black;
-    background: transparent;
-    cursor: pointer;
-    border-radius: 8px;
-}
+        .back-button {
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            border: 1px solid black;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 8px;
+        }
 
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 24px;
-}
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
 
-.card {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-}
 
-.card:hover {
-    transform: translateY(-5px);
-}
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
 
-.card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-}
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-.card-body {
-    padding: 16px;
-}
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
 
-.card-body h3 {
-    font-size: 1rem;
-    margin-bottom: 8px;
-}
+        a.card-link {
+            text-decoration: none;
+            color: inherit;
+        }
 
-.card-body p {
-    margin: 4px 0;
-    font-size: 0.85rem;
-    color: #444;
-}
+        .card-body {
+            padding: 16px;
+        }
 
-.price {
-    margin-top: 10px;
-    font-weight: bold;
-    color: #111;
-    font-size: 1rem;
-}
-</style>
+        .card-body h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .card-body p {
+            margin: 4px 0;
+            font-size: 0.85rem;
+            color: #444;
+        }
+
+        .price {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #111;
+            font-size: 1rem;
+        }
+    </style>
 </head>
+
 <body>
     <button class="back-button">Daftar Lelang</button>
 
+
     <div class="card-container">
         <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-            <div class="card">
-                <img src="../img/<?= $row['gambar'] ?>" alt="<?= $row['nama_barang'] ?>">
-                <div class="card-body">
-                    <h3><?= strtoupper($row['nama_barang']) ?></h3>
-                    <p><i class="fa-solid fa-calendar"></i> <?= date("d F Y", strtotime($row['tgl'])) ?></p>
-                    <p><i class="fa-solid fa-location-dot"></i> <?= $row['lokasi'] ?? '-' ?></p>
-                    <p><i class="fa-solid fa-car-side"></i> <?= $row['transmisi'] ?></p>
-                    <div class="price">Rp <?= number_format($row['harga_awal'], 0, ',', '.') ?></div>
+            <a href="/bidcar/views/penawaran.php?id_barang=<?= $row['id_barang'] ?>&id_lelang=<?= $row['id_lelang'] ?>"
+                class="card-link">
+                <div class="card">
+                    <img src="/bidcar/img/<?= $row['gambar'] ?>" alt="<?= $row['nama_barang'] ?>">
+                    <div class="card-body">
+                        <h3><?= strtoupper($row['nama_barang']) ?></h3>
+                        <p><i class="fa-solid fa-calendar"></i> <?= date("d F Y", strtotime($row['tgl'])) ?></p>
+                        <p><i class="fa-solid fa-location-dot"></i> <?= $row['lokasi'] ?? '-' ?></p>
+                        <p><i class="fa-solid fa-car-side"></i> <?= $row['transmisi'] ?></p>
+                        <div class="price">Rp<?= number_format($row['harga_awal'], 0, ',', '.') ?></div>
+                        <p class="price">Tawaran saat ini<br><span>Rp<?= number_format($row['harga_terkini'], 0, ',', '.') ?></span></p>
+                    </div>
                 </div>
-            </div>
-        <?php endwhile; ?>
+            <?php endwhile; ?>
     </div>
+    </a>
 </body>
 
 </html>

@@ -8,6 +8,7 @@
 </head>
 <body>
     <!-- Navbar -->
+     <header>
     <navbar class="navigasi">
         <div class="logo">
             <img src="/bidcar/img/bidcar alt color 1.svg">
@@ -28,12 +29,13 @@
         </div>
         </a>
     </navbar>
+    </header>
     <!-- Navbar -->
 
     <!-- Banner -->
     <section class="hero-banner">
         <div class="hero-content">
-            <a href="../../views/registrasi.php" class="btn-registrasi">
+            <a href="/bidcar/views/registrasi.php" class="btn-registrasi">
             Ikut Lelang Disini
             <span class="icon-wrapper">
                 <img src="../../img/arrow-icon.svg" alt="Arrow Icon">
@@ -80,8 +82,8 @@
 
     <!-- Pusat Bantuan -->
      <section class="pusat-bantuan">
-        <!-- <img src="/bidcar/img/Help Center.svg"> -->
-    <!-- <div class="pusat-bantuan">
+         <img src="/bidcar/img/Help Center.svg">
+    <<div class="pusat-bantuan">
         <h2 class="faq-title">Frequently<br>Asked<br>Question</h2>
         <p class="text-faq">Bingung atau ada kendala? Tenang, kami bantu. Semua informasi yang kamu<br>butuhkan ada disini--mulai dari cara ikut lelang sampai proses pengambilan mobil.<br>Yuk, cari tahu!</p>
     </div>
@@ -101,7 +103,7 @@
     <div class="unit">
         <h1>+50</h1>
         <p>Unit mobil terjual di 2024</p>
-    </div> -->
+    </div>
     </section>
     <!-- Pusat Bantuan -->
 

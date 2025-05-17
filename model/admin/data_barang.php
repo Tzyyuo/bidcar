@@ -19,7 +19,7 @@ include '../../config/koneksi.php';
 
     <div class="container">
         <button type="button" class="tambah-barang"><a href="../admin/crud/tambah_barang.php">Tambah Barang</a></button>
-        <button type="button" class="cetak-laporan">Cetak Laporan</button>
+        <button type="button" class="cetak-laporan"><a href="/bidcar/report/laporan_barang.php">Cetak Laporan</a></button>
         
         <div class="list-barang">
             <table border="1">
@@ -62,9 +62,9 @@ include '../../config/koneksi.php';
                         <td><?php echo $deskripsi_barang ?></td>
                         <td>
                             <button type="submit" name="edit"><a href="../admin/crud/edit_barang.php?id_barang=<?= $row['id_barang']; ?>"><i class="fa-solid fa-pen"></i></a></button>
-                             
-                            <button type="submit"><a href="../admin/crud/hapus_barang.php?id_barang=<?= $row['id_barang']; ?>" class="btn-delete" title="Hapus" onclick="return confirm('Yakin hapus data ini?')"><i class="fa-solid fa-trash"></i></a></button>
+                            <button type="submit" name ="hapus" ><a href="../admin/crud/hapus_barang.php?id_barang=<?= $row['id_barang']; ?>" class="btn-delete" title="Hapus" onclick="return confirm('Yakin hapus data ini?')"><i class="fa-solid fa-trash"></i></a></button>
                               
+                        
                             </buttona>
                         </td>
                     </tr>

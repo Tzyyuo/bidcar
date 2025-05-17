@@ -104,7 +104,7 @@ if (isset($_POST['tambah_barang'])) {
             </div>
 
             <div class="form-group">
-                <label for="tgl">Tanggal Mulai</label>
+                <label for="tgl">Tanggal</label>
                 <input type="date" id="tgl" name="tgl" value="<?= $data['tgl'] ?? '' ?>" required>
             </div>
 
