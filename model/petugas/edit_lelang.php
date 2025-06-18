@@ -1,4 +1,13 @@
 <?php 
+session_start();
+include '../config/koneksi.php';
+if (!isset($_SESSION['id_petugas']) || !isset($_SESSION['level'])) {
+    echo "<script>
+        alert('Silakan login terlebih dahulu.');
+        window.location.href = '/bidcar/views/login.php';
+    </script>";
+    exit;
+}
 
 if(isset($_POST['edit'])) {
     $id_lelang = $_POST['id_lelang'];

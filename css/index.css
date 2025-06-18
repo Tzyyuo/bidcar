@@ -109,7 +109,14 @@ button {
   gap: 10px;
   font-family: "Product Sans";
   font-weight: 500;
+  
 }
+
+.btn-kontak-kami a {
+  text-decoration: none;
+  color: #FDFDFD;
+}
+
 
 .btn-kontak-kami:hover {
   background-color: #444;
@@ -353,4 +360,60 @@ button {
   font-family: 'Product Sans Light';
   font-size: 16px;
   letter-spacing: 0.3px;
+}
+
+/* =============== Floating Chatbot =============== */
+
+.floating-chatbot-container {
+  position: fixed;
+  bottom: 120px;
+  right: 20px;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.chatbot-bubble {
+  background: white;
+  color: #333;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.chatbot-bubble:hover {
+  transform: scale(1.03);
+}
+
+.chat-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.chat-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.chat-tail {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+.chatbot-bubble img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }

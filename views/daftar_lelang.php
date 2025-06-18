@@ -1,20 +1,19 @@
 <?php
+
 include __DIR__ . '/../config/koneksi.php';
 
-$query = "SELECT
-    b.id_barang,
-    b.nama_barang,
-    b.gambar,
-    l.id_lelang,
-    l.status,
-    l.tgl_lelang   AS tgl,           -- alias jadi 'tgl'    
-    b.transmisi     AS transmisi,    -- kolom transmisi memang di tb_barang
-    b.harga_awal,
-    COALESCE(l.harga_akhir, b.harga_awal) AS harga_terkini
-  FROM tb_barang b
-  JOIN tb_lelang l ON b.id_barang = l.id_barang
-  WHERE l.status = 'dibuka'
-  ORDER BY l.tgl_lelang DESC
+if(!isset($_SESSION['id_user'])){
+    echo "<script>
+        alert('Silakan login terlebih dahulu.');
+        window.location.href = '/bidcar/views/login.php';
+    </script>";
+    exit;
+}
+
+$query = "SELECT b.id_barang, b.nama_barang, b.gambar, l.id_lelang, l.status, l.tgl_lelang   
+        AS tgl, b.transmisi  AS transmisi, b.harga_awal, COALESCE(l.harga_akhir, b.harga_awal) 
+        AS harga_terkini FROM tb_barang b JOIN tb_lelang l ON b.id_barang = l.id_barang 
+        WHERE l.status = 'dibuka' ORDER BY l.tgl_lelang DESC
 ";
 
 
@@ -106,22 +105,20 @@ $result = mysqli_query($koneksi, $query);
 
     <div class="card-container">
         <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-            <a href="/bidcar/views/penawaran.php?id_barang=<?= $row['id_barang'] ?>&id_lelang=<?= $row['id_lelang'] ?>"
-                class="card-link">
+            <a href="/bidcar/views/penawaran.php?id_barang=<?= $row['id_barang'] ?>&id_lelang=<?= $row['id_lelang'] ?>">
                 <div class="card">
-                    <img src="/bidcar/img/<?= $row['gambar'] ?>" alt="<?= $row['nama_barang'] ?>">
+                    <img src="/bidcar/dir/img/<?= $row['gambar'] ?>" alt="<?= $row['nama_barang'] ?>">
                     <div class="card-body">
                         <h3><?= strtoupper($row['nama_barang']) ?></h3>
                         <p><i class="fa-solid fa-calendar"></i> <?= date("d F Y", strtotime($row['tgl'])) ?></p>
-                        <p><i class="fa-solid fa-location-dot"></i> <?= $row['lokasi'] ?? '-' ?></p>
                         <p><i class="fa-solid fa-car-side"></i> <?= $row['transmisi'] ?></p>
                         <div class="price">Rp<?= number_format($row['harga_awal'], 0, ',', '.') ?></div>
                         <p class="price">Tawaran saat ini<br><span>Rp<?= number_format($row['harga_terkini'], 0, ',', '.') ?></span></p>
                     </div>
                 </div>
             <?php endwhile; ?>
+        </a>
     </div>
-    </a>
 </body>
 
 </html>

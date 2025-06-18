@@ -2,25 +2,14 @@
 session_start();
 include '../config/koneksi.php';
 
-// Cek session login
 if (!isset($_SESSION['id_petugas']) || !isset($_SESSION['level'])) {
     echo "<script>
         alert('Silakan login terlebih dahulu.');
-        window.location.href = '../views/login.php';
+        window.location.href = '/bidcar/views/login.php';
     </script>";
     exit;
 }
 
-// Cek hak akses
-if ($_SESSION['level'] != 1 && $_SESSION['level'] != 2) {
-    echo "<script>
-        alert('Anda tidak memiliki akses ke halaman ini.');
-        window.history.back();
-    </script>";
-    exit;
-}
-
-// Ambil filter dari GET
 $tgl_lelang = $_GET['tgl_lelang'] ?? '';
 $tgl_selesai = $_GET['tgl_selesai'] ?? '';
 $transmisi = $_GET['transmisi'] ?? '';
@@ -87,10 +76,12 @@ if (!$result) {
         }
 
         @media print {
+            body * {
+                visibility: hidden;
+            }
 
-            .filter,
-            .print-btn {
-                display: none;
+            .print-area, .print-area * {
+                visibility: visible;
             }
         }
     </style>
@@ -126,6 +117,7 @@ if (!$result) {
         <button onclick="window.print()">Cetak</button>
     </div>
 
+    <div class = "print-area">
     <table>
         <tr>
             <th>ID</th>
@@ -154,7 +146,8 @@ if (!$result) {
             </tr>
         <?php endif; ?>
     </table>
-    
+    </div>
+
     <button onclick="window.print()" class="no-print">Cetak Laporan</button>
 
 

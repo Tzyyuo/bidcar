@@ -1,0 +1,129 @@
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Wrapper seluruh profile */
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 60px;
+}
+
+/* Bagian kiri: Foto profil */
+.image-section {
+  flex: 1;
+  max-width: 400px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* Efek gambar profil */
+.foto-profile {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #007bff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Icon edit */
+.edit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 40px;
+  right: 60px;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: #479FEA;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 30px;
+  height: 30px;
+}
+
+.edit-icon img {
+  width: 50px;
+  height: 50px;
+}
+
+.edit-icon:hover {
+  background-color: #005fcf;
+  transform: scale(1.1);
+}
+
+/* Form section */
+.form-section {
+  flex: 1;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.form-section h2 {
+  font-family: 'Product Sans Black', sans-serif;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-section label {
+  font-family: 'Helvetica Neue', sans-serif;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: medium;
+  color: #444;
+}
+
+.form-section input {
+  font-family: 'Helvetica Neue', sans-serif;
+  height: 25px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: all 0.2 ease;
+}
+
+.form-section input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.name-input {
+  width: 100%;
+}
+
+.user-input {
+  width: 100%;
+}
+
+/* Tombol */
+.btn-submit {
+  background-color: #479FEA;
+  color: #FDFDFD;
+  height: 50px;
+  padding: 12px 235px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-submit:hover {
+  background-color: #005fcf;
+  /* transform: translateY(-2px); */
+}

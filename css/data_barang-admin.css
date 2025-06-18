@@ -1,0 +1,371 @@
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-5');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', 'Product Sans', sans-serif;
+    background-color: #F8F9FA;
+}
+
+.main-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar*/
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 260px;
+    height: 100vh;
+    /* min-height: 100vh; */
+    background-color: #FDFDFD;
+    padding: 34px 20px;
+    border-right: 1px solid #e0e0e0;
+}
+
+.sidebar h1 {
+    font-size: 26px;
+    color: #7CB518;
+    margin-left: 12px;
+    font-family: 'Product Sans Black', sans-serif;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a,
+.logout-btn a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: #2b2b2b;
+    font-family: 'Product Sans Medium', sans-serif;
+    font-size: 17px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li.active a {
+    background-color: #eaeaea;
+}
+
+.sidebar ul li a:not(.active):hover,
+.logout-btn a:hover {
+    background-color: #f0f0f0;
+}
+
+.sidebar ul li a img,
+.logout-btn img{
+    width: 24px;
+    height: 24px;
+}
+
+.sidebar ul li form {
+    margin-top: 10px;
+}
+
+.sidebar ul li button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.sidebar-divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 12px 12px;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 4px;
+    width: 100%;
+    text-align: left;
+}
+/* End Sidebar */
+
+/* Content */
+.content-area {
+    flex: 1;
+    margin-left: 250px;
+    padding: 39px 30px 40px 40px;
+    background-color: #F3F4F6;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 0px 20px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    height: 30px;
+    margin-left: -6px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-family: 'Product Sans';
+    font-weight: bold;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+.petugas-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.header-barang {
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.header-barang h1 {
+    font-size: 28px;
+    font-family: 'Product Sans Black', sans-serif;
+    color: #2b2b2b;
+}
+
+.table-section {
+    background-color: #FFFFFF;
+    padding: 25px;
+    border-radius: 15px;
+    outline: 1px solid #e0e0e0;
+}
+
+.table-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    margin-top: -5px;
+}
+
+.table-actions a {
+    text-decoration: none;
+}
+
+.tambah-barang-btn,
+.cetak-laporan-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: background-color 0.2s ease;
+}
+
+.tambah-barang-btn img,
+.cetak-laporan-btn img {
+    width: 18px;
+    height: 18px;
+}
+
+.tambah-barang-btn {
+    background-color: #DFF6DA;
+    color: #567744;
+}
+
+.tambah-barang-btn:hover {
+    background-color: #d3e9ce;
+}
+
+.tambah-barang-btn a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cetak-laporan-btn {
+    background-color: #D8D8D8;
+    color: #192122;
+}
+
+.cetak-laporan-btn:hover {
+    background-color: #c7c7c7;
+}
+
+.list-barang table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+.list-barang th,
+.list-barang td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.list-barang thead th {
+    background-color: #FDFDFD;
+    color: #333;
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.list-barang tbody tr {
+    font-size: 13px;
+    transition: all 0.2 ease;
+}
+
+.list-barang tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.list-barang tbody tr:nth-child(even) {
+    background-color: #F7F6FE;
+}
+
+.list-barang tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.list-barang .col-no {
+    width: 5%;
+    text-align: center;
+}
+
+.list-barang .col-barang-nama {
+    width: 28%;
+}
+
+.list-barang .col-transmisi {
+    width: 12%;
+}
+
+.list-barang .col-tanggal {
+    width: 12%;
+}
+
+.list-barang .col-harga-awal {
+    width: 15%;
+}
+
+.list-barang .col-status {
+    width: 14%;
+}
+
+.list-barang .col-thn {
+    width: 15%;
+}
+
+.list-barang .col-action {
+    width: 10%;
+}
+
+.list-barang .col-barang-nama-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;  
+    gap: 15px;  
+}
+
+.list-barang .item-img {
+    width: 60px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.status-badge {
+    padding: 10px 12px;
+    margin-left: -5px;
+    border-radius: 18px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.status-sudah-dilelang {
+    background-color: #EBF9F1;
+    color: #1F9254;
+}
+
+.status-dilelang {
+    background-color: #FEF2E5;
+    color: #CD6200;
+}
+
+.status-belum-lelang {
+    background-color: #F2F2F2;
+    color: #9C9C9C;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: -20px;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.edit-btn:hover {
+    transform: translateY(-2px);
+}
+
+.delete-btn:hover {
+    transform: translateY(-2px);
+}
+/* End Content */

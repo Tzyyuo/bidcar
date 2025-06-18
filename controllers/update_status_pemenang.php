@@ -1,5 +1,5 @@
 <?php
-$id_lelang = $_GET['id']; // atau dari form
+$id_lelang = $_GET['id']; 
 
 // 1. Ambil penawaran tertinggi
 $query = "SELECT id_history FROM tb_history_lelang WHERE id_lelang = ? ORDER BY penawaran_harga DESC LIMIT 1";
@@ -16,17 +16,18 @@ $updateAll->bind_param("i", $id_lelang);
 $updateAll->execute();
 
 // 3. Ubah status pemenang jadi 'Menang'
-$updateWinner = $koneksi->prepare("UPDATE tb_history_lelang SET status = 'Menang' WHERE id_history = ?");
-$updateWinner->bind_param("i", $id_pemenang);
-$updateWinner->execute();
+$updatePemenang = $koneksi->prepare("UPDATE tb_history_lelang SET status = 'Menang' WHERE id_history = ?");
+$updatePemenang->bind_param("i", $id_pemenang);
+$updatePemenang->execute();
 
-// 4. (Opsional) Simpan harga akhir ke tabel `tb_lelang`
+// 4. Simpan harga akhir ke tabel 'tb_lelang'
 $hargaAkhir = $koneksi->prepare("SELECT penawaran_harga FROM tb_history_lelang WHERE id_history = ?");
 $hargaAkhir->bind_param("i", $id_pemenang);
 $hargaAkhir->execute();
 $hasil = $hargaAkhir->get_result()->fetch_assoc();
 $finalPrice = $hasil['penawaran_harga'];
 
+// 5. tutup lelang dan simpan harga akhir (paling tinggi)
 $updateLelang = $koneksi->prepare("UPDATE tb_lelang SET harga_akhir = ?, status = 'Ditutup' WHERE id_lelang = ?");
 $updateLelang->bind_param("ii", $finalPrice, $id_lelang);
 $updateLelang->execute();

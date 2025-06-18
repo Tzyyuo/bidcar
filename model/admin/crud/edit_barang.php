@@ -1,6 +1,9 @@
 <?php
-
+session_start();
 include '../../../config/koneksi.php';
+$id_petugas = $_SESSION['id_petugas']; // Asumsi 'id_petugas' disimpan di session
+$query = mysqli_query($koneksi, "SELECT * FROM tb_petugas WHERE id_petugas = '$id_petugas'");
+$pfp = mysqli_fetch_assoc($query);
 
 if (isset($_GET['id_barang'])) {
     $id_barang = $_GET['id_barang'];
@@ -19,19 +22,32 @@ if (isset($_GET['id_barang'])) {
         exit;
     }
 }
-if (isset($_POST['tambah_barang'])) {
+
+
+function formatRupiah($angka) {
+    if ($angka === null || $angka === '') {
+        return 'Rp 0';
+    }
+    $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+
+if (isset($_POST['update_barang'])) {
     $id_barang = $_GET['id_barang'];
-    $nama_barang = $_POST['nama_barang'];
-    $harga_awal = $_POST['harga_awal'];
-    $tgl = $_POST['tgl'];
-    $deskripsi_barang = $_POST['deskripsi_barang'];
-    $transmisi = $_POST['transmisi'];
+    $nama_barang = mysqli_real_escape_string($koneksi, $_POST['nama_barang']);
+    $harga_awal_formatted = mysqli_real_escape_string($koneksi, $_POST['harga_awal']); 
+    $harga_awal = preg_replace('/[^0-9]/', '', $harga_awal_formatted); 
+
+    $tgl = mysqli_real_escape_string($koneksi, $_POST['tgl']);
+    $deskripsi_barang = mysqli_real_escape_string($koneksi, $_POST['deskripsi_barang']);
+    $transmisi = mysqli_real_escape_string($koneksi, $_POST['transmisi']);
 
     // Cek apakah user upload gambar baru
+    $nama_file = $data['gambar'];
     if (!empty($_FILES['gambar']['name'])) {
         $nama_file = $_FILES['gambar']['name'];
         $tmp_file = $_FILES['gambar']['tmp_name'];
-        $path = "../../../assets/img/" . $nama_file;
+        $path_upload = "../../../dir/img/";
         $allowed_types = ['image/png', 'image/jpeg'];
         $type_file = $_FILES['gambar']['type'];
         $ukuran_file = $_FILES['gambar']['size'];
@@ -47,10 +63,15 @@ if (isset($_POST['tambah_barang'])) {
             exit;
         }
 
-        move_uploaded_file($tmp_file, $path);
-    } else {
-        // Jika gambar tidak diupload, pakai gambar lama
-        $nama_file = $data['gambar'];
+        // Pastikan direktori ada
+        if (!is_dir($path_upload)) {
+            mkdir($path_upload, 0755, true);
+        }
+
+        if (!move_uploaded_file($tmp_file, $path_upload . $nama_file)) {
+             echo "<script>alert('Gagal mengupload gambar.');</script>";
+             exit;
+        }
     }
 
     $stmt = $koneksi->prepare("UPDATE tb_barang SET nama_barang = ?, harga_awal = ?, tgl = ?, deskripsi_barang = ?, transmisi = ?, gambar = ? WHERE id_barang = ?");
@@ -63,7 +84,7 @@ if (isset($_POST['tambah_barang'])) {
               </script>";
     } else {
         echo "<script>
-                alert('Gagal update data');
+                alert('Gagal update data: " . $stmt->error . "');
               </script>";
     }
 
@@ -77,53 +98,149 @@ if (isset($_POST['tambah_barang'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendataan Barang</title>
+    <title>Edit Barang</title>
+    <link rel="icon" href="/bidcar/img/icon-web.svg">
+    <link rel="stylesheet" href="../../../css/edit_barang-admin.css">
 </head>
 <body>
-    <div class="content">
-        <h1>Edit Barang</h1>
-        <?php if (isset($message)) echo "<p>$message</p>"; ?>
-        <form method="POST" action="" enctype="multipart/form-data">
+    <div class="main-wrapper">
+        <div class="sidebar">
+            <h1>BidCar.</h1>
+            <hr class="sidebar-divider"/>
 
-            <div class="form-group">
-                <label for="nama_barang">Nama Barang</label>
-                <input type="text" id="nama_barang" name="nama_barang" value="<?= $data['nama_barang'] ?? '' ?>" required>
+            <ul>
+                <li><a href="/bidcar/model/admin/dashboard_admin.php"><img src="../../../img/dashboard-icon.svg" alt="dashboard"/>Dashboard</a></li>
+                <li class="active"><a href="/bidcar/model/admin/data_barang.php"><img src="../../../img/barang-icon.svg" alt="barang"/>Data Barang</a></li>
+                <li><a href="/bidcar/model/admin/data_lelang.php"><img src="../../../img/lelang-icon.svg" alt="lelang"/>Data Lelang</a></li>
+                <li><a href="/bidcar/model/admin/data_petugas.php"><img src="../../../img/admin-icon.svg" alt="admin"/>Data Petugas</a></li> 
+                <li><a href="/bidcar/model/admin/data_pengguna.php"><img src="../../../img/user-icon.svg" alt="user"/>Data User</a></li> 
+            </ul>
+
+            <hr class="sidebar-divider" />
+            <form method="GET" action="../controllers/logout_controllers.php">
+                <button type="button" name="logout" class="logout-btn">
+                    <a href="/bidcar/controllers/logout_controllers.php"><img src="../../../img/logout-icon.svg" alt="logout"/>Logout</a>
+                </button>
+            </form>
+        </div>
+        <div class="content">
+            <div class="navbar-content">
+                <div class="navbar-left">
+                <img src="../../../img/bidcar alt color 3.svg" alt="BidCar Logo" class="header-logo">
             </div>
+                <div class="header-right">
+                <a href="../../views/profile-admin.php">
+                    <div class="admin-profile">
+                        <?php
+                        // Menentukan nama file gambar default/ikon seperti di halaman profil
+                        $default_profile_image = 'default.png';
+                        $placeholder_icon_image = 'profile-pfp.svg';
 
-            <div class="form-group">
-                <label for="gambar">Gambar:</label><br>
-                <?php if (!empty($data['gambar'])): ?>
-                    <img src="../../../assets/img/<?= $data['gambar'] ?>" width="100"><br>
-                <?php endif; ?>
-                <input type="file" id="gambar" name="gambar">
-            </div>
+                        // Menentukan path foto yang akan ditampilkan
+                        $foto_petugas_path = '';
+                        if (isset($pfp['foto']) && !empty($pfp['foto']) && $pfp['foto'] != $default_profile_image) {
+                            $foto_petugas_path = htmlspecialchars($pfp['foto']);
+                        } else {
+                            $foto_petugas_path = $placeholder_icon_image;
+                        }
+                        ?>
 
-            <div class="form-group">
-                <label for="harga_awal">Harga Awal</label>
-                <input type="text" id="harga_awal" name="harga_awal" value="<?= $data['harga_awal'] ?? '' ?>" required>
-            </div>
+                        <img src="/bidcar/img/<?= $foto_petugas_path ?>" alt="Foto Petugas" class="petugas-icon">
+                        <span><?= htmlspecialchars($pfp['username'])?></span>
+                    </div>
+                </a>
+                </div>
+        </div>
 
-            <div class="form-group">
-                <label for="tgl">Tanggal</label>
-                <input type="date" id="tgl" name="tgl" value="<?= $data['tgl'] ?? '' ?>" required>
-            </div>
+            <h1>Edit Barang</h1>
+            <?php if (isset($message)) echo "<p class='message'>$message</p>"; ?>
 
-            <div class="form-group">
-                <label for="deskripsi_barang">Deskripsi Barang</label>
-                <input type="text" id="deskripsi_barang" name="deskripsi_barang" value="<?= $data['deskripsi_barang'] ?? '' ?>" required>
-            </div>
+            <form method="POST" action="" enctype="multipart/form-data" class="form-container">
+                <div class="form-group">
+                    <label for="nama_barang">Barang</label>
+                    <input type="text" id="nama_barang" name="nama_barang" placeholder="Masukkan Nama Barang" value="<?= $data['nama_barang'] ?? '' ?>" required>
+                </div>
 
-            <div class="form-group">
-                <select id="transmisi" name="transmisi" required>
-                    <option value="">-- Pilih Transmisi --</option>
-                 <option value="Manual" <?= (isset($data['transmisi']) && $data['transmisi'] == 'Manual') ? 'selected' : '' ?>>Manual</option>
-                <option value="Otomatis" <?= (isset($data['transmisi']) && $data['transmisi'] == 'Otomatis') ? 'selected' : '' ?>>Otomatis</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="harga_awal">Harga</label>
+                    <input type="text" id="harga_awal" name="harga_awal" placeholder="Masukkan Harga" value="<?= formatRupiah($data['harga_awal'] ?? 0) ?>" onkeyup="formatRupiahJS(this)" required>
+                </div>
 
-            <button type="submit" name="tambah_barang">Simpan Perubahan</button>
-        </form>
+                <div class="form-row">
+                    <div class="form-column">
+                     <label for="gambar">Gambar</label>
+                        <div class="file-input-wrapper">
+                            <label for="gambar" class="file-input-button">Pilih File</label>
+                            <span id="file-name-display" class="file-input-display">
+                                <?php echo !empty($data['gambar']) ? $data['gambar'] : 'Tambahkan Gambar'; ?>
+                            </span>
+                            <input type="file" id="gambar" name="gambar" onchange="displayFileName(this)">
+                        </div>
+                    </div>
 
+                    <div class="form-column">
+                        <label for="transmisi">Transmisi</label>
+                        <select id="transmisi" name="transmisi" required>
+                            <option value="Manual" <?= (isset($data['transmisi']) && $data['transmisi'] == 'Manual') ? 'selected' : '' ?>>Manual</option>
+                            <option value="Automatic" <?= (isset($data['transmisi']) && $data['transmisi'] == 'Otomatis') ? 'selected' : '' ?>>Otomatis</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="deskripsi_barang">Deskripsi</label>
+                    <textarea id="deskripsi_barang" name="deskripsi_barang" placeholder="Masukkan Deskripsi Barang" rows="4" required><?= $data['deskripsi_barang'] ?? '' ?></textarea>
+                </div>
+
+                <input type="hidden" id="tgl" name="tgl" value="<?= $data['tgl'] ?? date('Y-m-d'); ?>">
+
+                <button type="submit" name="update_barang" class="submit-btn">Ubah</button>
+            </form>
+        </div>
     </div>
+
+    <script>
+        // Fungsi untuk menampilkan nama file gambar yang dipilih
+        function displayFileName(input) {
+            const fileNameDisplay = document.getElementById('file-name-display');
+            if (input.files && input.files[0]) {
+                fileNameDisplay.textContent = input.files[0].name;
+            } else {
+                fileNameDisplay.textContent = '<?php echo !empty($data['gambar']) ? $data['gambar'] : 'Tambahkan Gambar'; ?>';
+            }
+        }
+        // Format input harga ke format Rupiah
+        function formatRupiahJS(input) {
+            let angka = input.value.replace(/[^,\d]/g, '');
+            if (angka === '') {
+                input.value = '';
+                return;
+            }
+
+            angka = angka.replace(/Rp\.?\s?|(\.*)/g, '');
+
+            let rupiah = '';
+            let angkarev = angka.toString().split('').reverse().join('');
+            for (let i = 0; i < angkarev.length; i++) {
+                if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
+            }
+            rupiah = rupiah.split('', rupiah.length - 1).reverse().join('');
+            input.value = 'Rp ' + rupiah;
+        }
+
+        document.querySelector('.form-container').addEventListener('submit', function() {
+            let hargaInput = document.getElementById('harga_awal');
+            hargaInput.value = hargaInput.value.replace(/[^0-9]/g, '');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const hargaInput = document.getElementById('harga_awal');
+            if (hargaInput) {
+                formatRupiahJS(hargaInput);
+            }
+            // menampilkan nama file gambar yang sudah ada
+            displayFileName(document.getElementById('gambar'));
+        });
+    </script>
 </body>
 </html>

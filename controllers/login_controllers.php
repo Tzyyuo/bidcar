@@ -6,8 +6,6 @@ include '../config/koneksi.php';
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-
-
     
     $query = "SELECT * FROM tb_petugas WHERE username = ?";
     $stmt = $koneksi->prepare($query);
@@ -31,10 +29,13 @@ if (isset($_POST['submit'])) {
                 exit;
             }
         } else {
-            echo "<script>
-            alert('Password Salah!');
-            window.location.href = '/bidcar/views/login.php';
-            </script>";
+             $_SESSION['flash'] = [
+                'icon' => 'error',
+                'title' => 'Password Salah!',
+                'text' => 'Silakan coba lagi.'
+            ];
+            header("Location: /bidcar/views/login.php");
+            exit;
         }
     } else {
         
@@ -54,13 +55,23 @@ if (isset($_POST['submit'])) {
                 header("Location: /bidcar/model/masyarakat/laman_masyarakat.php");
             } else {
 
-                echo "<script>
-            alert('Password Salah!');
-            window.location.href = '/bidcar/views/login.php';
-            </script>";
+                  $_SESSION['flash'] = [
+                    'icon' => 'error',
+                    'title' => 'Password Salah!',
+                    'text' => 'Silakan coba lagi.'
+                ];
+                header("Location: /bidcar/views/login.php");
+                exit;
             }
         } else {
-            echo "Username tidak ditemukan!";
+            $_SESSION['flash'] = [
+                'icon' => 'error', 
+                
+                'title' => 'Username Tidak Ditemukan!',
+                'text' => 'Coba lagi.'
+            ];
+            header("Location: /bidcar/views/login.php");
+            exit;
         }
     }
 }

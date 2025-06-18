@@ -13,6 +13,7 @@ if(isset($_SESSION['id_user'])) {
 $id_user = $_SESSION['id_user'];
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
 
+//lihat data lelang nama sama barang yg dimenangkan
 $sql = "SELECT h.*, l.id_barang, b.nama_barang, ,.nama_lengkap FROM tb_history_lelang h JOIN tb_lelang l ON h.id_lelnag = l.id_lelang
 JOIN tb_barang b ON l.id_barang = b.id_barang JOIN tb_masyarakat m ON h.id_user = m.id_user WHERE h.id_user = ?";
 

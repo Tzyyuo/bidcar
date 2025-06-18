@@ -205,3 +205,161 @@ echo "Penawaran Rp " . number_format($harga_penawaran,0,',','.') . " berhasil di
                 </div>
             <?php endwhile; ?>
     </div>
+
+    <?php
+session_start();
+include '../config/koneksi.php';
+
+if (!isset($_SESSION['id_user'])) {
+    header('Location: login.php');
+    exit;
+}
+
+$id_user = $_SESSION['id_user'];
+$query = mysqli_query($koneksi, "SELECT * FROM tb_masyarakat WHERE id_user = '$id_user'");
+$data = mysqli_fetch_assoc($query);
+
+$notif = "";
+
+if (isset($_POST['update'])) {
+    $nama_lengkap = mysqli_real_escape_string($koneksi, $_POST['nama_lengkap']);
+    $telp = mysqli_real_escape_string($koneksi, $_POST['telp']);
+
+    $update = mysqli_query($koneksi, "UPDATE tb_masyarakat SET nama_lengkap='$nama_lengkap', telp='$telp' WHERE id_user='$id_user'");
+
+    if ($update) {
+        $notif = "<div class='alert success'>Profil berhasil diperbarui</div>";
+    } else {
+        $notif = "<div class='alert error'>Gagal memperbarui profil</div>";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profil Saya</title>
+    <link rel="stylesheet" href="assets/css/style.css"> <!-- optional external -->
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-box {
+            width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+
+        .profile-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c7be5;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #2c7be5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #1a5dcc;
+        }
+
+        .alert {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        @keyframes fadeSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert {
+    animation: fadeSlide 0.4s ease-in-out;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="profile-box">
+    <h2>Profil Saya</h2>
+
+    <?= $notif ?>
+
+    <form method="post">
+        <div class="form-group">
+            <label>Nama Lengkap:</label>
+            <input type="text" name="nama_lengkap" value="<?= htmlspecialchars($data['nama_lengkap']) ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label>Username (tidak bisa diubah):</label>
+            <input type="text" value="<?= htmlspecialchars($data['username']) ?>" disabled>
+        </div>
+
+        <div class="form-group">
+            <label>Nomor Telepon:</label>
+            <input type="text" name="telp" value="<?= htmlspecialchars($data['telp']) ?>" required>
+        </div>
+
+        <button type="submit" name="update" class="btn">Simpan Perubahan</button>
+    </form>
+</div>
+
+</body>
+</html>

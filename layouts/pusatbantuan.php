@@ -1,22 +1,48 @@
-<section class="pusat">
-    <div class="pusat-bantuan">
-        <h2 class="faq-title">Frequently<br>Asked<br>Question</h2>
-        <p class="text-faq">Bingung atau ada kendala? Tenang, kami bantu. Semua informasi yang kamu<br>butuhkan ada disini--mulai dari cara ikut lelang sampai proses pengambilan mobil.<br>Yuk, cari tahu!</p>
-    </div>
-    <div class="faq">
-        <h3>Bagaimana cara ikut lelang mobil?</h3>
-        <p>Daftar akun, verifikasi identitas, lalu mulai bid mobil pilihan kamu<br>secara real-time.</p>
-    </div>
-    <div class="faq">
-        <h3>Apakah registrasi di BidCar berbayar?</h3>
-        <p>Tidak sama sekali. Proses registrasi 100% gratis dan cepat.</p>
-    </div>
-    <div class="faq">
-        <h3>Apakah mobilnya sudah dicek sebelum dilelang?</h3>
-        <p>Ya, semua unit sudah melewati proses inspeksi profeional oleh tim ahli.</p>
-    </div>
-</section>
-<div class="unit">
-    <h1>+50</h1>
-    <p>Unit mobil terjual di 2024</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pusat Bantuan - BidCar</title>
+    <style>
+        .pusat-bantuan {
+  background-image: url('/bidcar/img/Help Center.svg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  height: 590px;
+  position: relative;
+  overflow: hidden;
+}
+
+ .faq-title {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.text-faq {
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+.faq h3 {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #2b2b2b;
+}
+
+.faq p {
+  font-size: 14px;
+  color: #444;
+} 
+    </style>
+</head>
+<body>
+     <!-- Pusat Bantuan -->
+     <section class="pusat-bantuan" id="help-center"></section>
+    <!-- Pusat Bantuan -->
+
+</body>
+</html>

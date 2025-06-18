@@ -1,0 +1,363 @@
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-5');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  src: url('../fonts/ProductSans-Medium.ttf') format('truetype');
+
+}
+
+body {
+  font-family: 'Product Sans';
+  background-color: #F6F9FB;
+  color: #2b2b2b;
+  line-height: 1.6;
+}
+
+/* =============== NAVBAR =============== */
+.navigasi {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 90px;
+  background-color: #FDFDFD;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 999;
+}
+
+/* Logo dan menu */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo img {
+  height: 26px;
+}
+
+.logo ul {
+  display: flex;
+  list-style: none;
+  gap: 19px;
+}
+
+.logo ul li a {
+  font-family: 'Product Sans';
+  text-decoration: none;
+  font-size: 13px;
+  color: #212121;
+  letter-spacing: 0.2px;
+  font-weight: medium;
+  transition: color 0.2s ease-in-out;
+}
+
+.logo ul li a:hover {
+  color: #007bff;
+}
+
+/* Tombol kanan */
+.button-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button-container a {
+  text-decoration: none;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  height: 33px;
+  gap: 7px;
+  font-size: 12px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* Masuk button */
+.profile {
+  background-color: #FDFDFD;
+  border: none;
+  color: #2b2b2b;
+  font-family: "Product Sans";
+  font-weight: 500;
+}
+
+.profile a {
+  text-decoration: none;
+  color: #2b2b2b;
+}
+
+/* .btn-masuk:hover {
+  background-color: #f5f5f5;
+} */
+
+/* Kontak Kami button */
+.btn-kontak-kami {
+  background-color: #FDFDFD;
+  color: #2b2b2b;
+  border: none;
+  gap: 6px;
+  font-family: "Product Sans";
+  font-weight: 500;
+}
+
+/* .btn-kontak-kami:hover {
+  background-color: #444;
+} */
+
+/* Icon image */
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+.pfp {
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
+}
+
+/* =============== HERO / BANNER =============== */
+.hero-banner {
+  background-image: url('/bidcar/img/banner-3.svg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  margin-top: -20px;
+  margin-bottom: 20px;
+  height: 380px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content a {
+  font-size: 15px;
+  letter-spacing: 0.6px;
+  font-family: 'Product Sans Light';
+}
+
+.btn-registrasi {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: 7.5rem;
+  margin-top: 190px;
+  padding: 7px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2b2b2b;
+  background-color: transparent;
+  border: 1.5px solid #2b2b2b;
+  border-radius: 69px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-registrasi:hover {
+  background-color: #d3eff6;
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-wrapper img {
+  width: 28px;
+  height: 28px;
+}
+
+/* LELANG */
+.lelang-section {
+  display: flex;
+  justify-content: left;
+  padding: 30px 120px;
+  margin-bottom: -20px;
+  margin-left: -15px;
+}
+
+.lelang-heading {
+  padding: 6px 15px;
+  text-align: center;
+  border: 2px solid #2b2b2b;
+  border-radius: 50px;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    margin-bottom: 40px;
+}
+
+.card-link {
+    text-decoration: none; /* Hapus garis bawah link */
+    color: inherit; /* Warisi warna teks dari parent */
+}
+
+.card {
+    background-color: #FDFDFD;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0; 
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Sedikit naik saat hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); /* Bayangan lebih gelap saat hover */
+}
+
+/* Gambar di dalam card */
+.card img {
+    width: 100%;
+    height: 205px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+
+.card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Biarkan card-body memenuhi sisa ruang vertikal */
+}
+
+.card-body h3 {
+    font-family: 'Product Sans Medium';
+    letter-spacing: 0.5px;
+    font-size: 18px;
+    color: #2b2b2b;
+    margin-left: 8px;
+    margin-top: 0;
+    margin-bottom: -4px;
+    min-height: 40px;
+}
+
+.card-body p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    color: #626262;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+
+}
+
+.card-body p img {
+    margin-right: 5px;
+    margin-top: -3px;
+    width: 16px;
+    height: 16px;
+}
+
+.card-body .price {
+    background-color: #e0e0e0;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-family: 'Product Sans Medium';
+    /* font-weight: 500; */
+    letter-spacing: 0.5px;
+    color: #2b2b2b;
+    display: inline-block;
+    margin-left: 4px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+    width: fit-content;
+    line-height: 1;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+/* =============== FOOTER =============== */
+.bagian-bawah {
+  background-color: #2b2b2b;
+  color: #FDFDFD;
+  padding: 40px 0px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.isi-footer p {
+  font-family: 'Product Sans Light';
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+  line-height: 20px;
+}
+
+.icon-footer {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.icon-sosmed,
+.icon-fb,
+.icon-wa {
+  width: 20px;
+  margin-right: 4px;
+}
+
+.hub h3 {
+  font-family: 'Product Sans';
+  font-size: 28px;
+  font-weight: 400;
+}
+
+.hub p {
+  font-family: 'Product Sans Light';
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  color: #DEDEDE;
+}
+
+.kontak-item {
+  display: flex;
+  align-items: center;
+}
+
+.kontak-item img {
+  width: 16px;
+  margin-right: 8px;
+}
+
+.kontak-item span {
+  font-family: 'Product Sans Light';
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}

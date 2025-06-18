@@ -7,21 +7,11 @@ include '../config/koneksi.php';
 if (!isset($_SESSION['id_petugas']) || !isset($_SESSION['level'])) {
   echo "<script>
         alert('Silakan login terlebih dahulu.');
-        window.location.href = '../views/login.php';
+        window.location.href = '/bidcar/views/login.php';
     </script>";
   exit;
 }
 
-// Cek hak akses level (1=admin, 2=petugas)
-if ($_SESSION['level'] != 1 && $_SESSION['level'] != 2) {
-  echo "<script>
-        alert('Anda tidak memiliki akses ke halaman ini.');
-        window.history.back();
-    </script>";
-  exit;
-}
-
-// Ambil filter dari GET
 $transmisi = $_GET['transmisi'] ?? '';
 $tgl = $_GET['tgl'] ?? '';
 
@@ -83,13 +73,16 @@ if (!$result) {
       margin-bottom: 15px;
     }
 
-    @media print {
+   @media print {
+  body * {
+    visibility: hidden;
+  }
 
-      .filter,
-      .print-btn {
-        display: none;
-      }
-    }
+  .print-area, .print-area * {
+    visibility: visible;
+  }
+
+}
   </style>
 </head>
 
@@ -113,31 +106,33 @@ if (!$result) {
     <button type="submit">Filter</button>
   </form>
 
-  <table border="1" cellpadding="5" cellspacing="0">
-    <tr>
-      <th>ID</th>
-      <th>Nama</th>
-      <th>Tanggal</th>
-      <th>Harga</th>
-      <th>Transmisi</th>
-    </tr>
-    <?php if (mysqli_num_rows($result) > 0): ?>
-      <?php while ($row = mysqli_fetch_assoc($result)): ?>
-        <tr>
-          <td><?= htmlspecialchars($row['id_barang']) ?></td>
-          <td><?= htmlspecialchars($row['nama_barang']) ?></td>
-          <td><?= htmlspecialchars($row['tgl']) ?></td>
-          <td><?= htmlspecialchars($row['harga_awal']) ?></td>
-          <td><?= htmlspecialchars($row['transmisi']) ?></td>
-        </tr>
-      <?php endwhile; ?>
-    <?php else: ?>
+  <div class="print-area">
+    <table>
       <tr>
-        <td colspan="5">Tidak ada data.</td>
+        <th>ID</th>
+        <th>Nama</th>
+        <th>Tanggal</th>
+        <th>Harga</th>
+        <th>Transmisi</th>
       </tr>
-    <?php endif; ?>
-  </table>
-  
+      <?php if (mysqli_num_rows($result) > 0): ?>
+        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+          <tr>
+            <td><?= htmlspecialchars($row['id_barang']) ?></td>
+            <td><?= htmlspecialchars($row['nama_barang']) ?></td>
+            <td><?= htmlspecialchars($row['tgl']) ?></td>
+            <td><?= htmlspecialchars($row['harga_awal']) ?></td>
+            <td><?= htmlspecialchars($row['transmisi']) ?></td>
+          </tr>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <tr>
+          <td colspan="5">Tidak ada data.</td>
+        </tr>
+      <?php endif; ?>
+    </table>
+  </div>
+
   <button onclick="window.print()" class="no-print">Cetak Laporan</button>
 
 

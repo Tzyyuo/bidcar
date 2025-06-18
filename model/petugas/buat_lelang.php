@@ -1,5 +1,14 @@
 <?php 
+session_start();
 include '../../config/koneksi.php';
+
+if (!isset($_SESSION['id_petugas']) || !isset($_SESSION['level'])) {
+    echo "<script>
+        alert('Silakan login terlebih dahulu.');
+        window.location.href = '/bidcar/views/login.php';
+    </script>";
+    exit;
+}
 ?>
 
 <h2>Tambah Lelang</h2>
@@ -18,7 +27,7 @@ include '../../config/koneksi.php';
     <br><br>
 
     <label for="tgl_barang">Tanggal Lelang:</label><br>
-    <input type="date" name="tgl_barang" required><br><br>
+    <input type="date" name="tgl_lelang" required><br><br>
 
     <button type="submit">Simpan Lelang</button>
 </form>
