@@ -1,5 +1,4 @@
-
-## 👥 Collaborators
+## 🧑‍💻 Collaborators
 
 <table>
   <tr>
