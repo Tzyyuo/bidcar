@@ -5,7 +5,7 @@
       <a href="https://github.com/Tzyyuo">
         <img src="https://avatars.githubusercontent.com/Tzyyuo" width="80px;" alt="Tzyyuo"/><br />
         <sub><b>Tzyyuo</b></sub>
-        <p>Project Developer</p>
+        <p>Development & Technical Leader</p>
       </a>
     </td>
     <td align="center">
