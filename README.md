@@ -8,6 +8,14 @@
         <p>Development & Technical Leader</p>
       </a>
     </td>
+     <tr>
+      <td align="center">
+      <a href="https://github.com/saikalnurzaman">
+        <img src="https://avatars.githubusercontent.com/saikalnurzaman" width="80px;" alt="Tzyyuo"/><br />
+        <sub><b>Tzyyuo</b></sub>
+        <p>Team Leader</p>
+      </a>
+    </td>
     <td align="center">
       <a href="https://github.com/azvlyy">
         <img src="https://avatars.githubusercontent.com/azvlyy" width="80px;" alt="azvlyy"/><br />
