@@ -1,5 +1,4 @@
-##Credits
-<p>This Project is about Biding Car</p>
+#Credits
 <table>
   <tr>
       <td align="center">
