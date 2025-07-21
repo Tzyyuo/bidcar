@@ -1,13 +1,6 @@
 #Credits
 <table>
   <tr>
-    <td align = "center">
-      <img src="https://avatars.githubusercontent.com/saikalnurzaman width "80px">
-      <sub><b>Saikal</b></sub>
-      <p>Project leader</p>
-      </td>
-  </tr>
-  <tr>
       <td align="center">
       <a href="https://github.com/Tzyyuo">
         <img src="https://avatars.githubusercontent.com/Tzyyuo" width="80px;" alt="Tzyyuo"/><br />
